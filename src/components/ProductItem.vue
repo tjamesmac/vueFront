@@ -5,6 +5,7 @@
     <button
       class="btn btn-primary btn-green"
       aria-label="Find out more about this product"
+      v-on:click="this.handleOpen"
     >
       More about this product
     </button>
@@ -16,6 +17,11 @@ export default {
   name: "ProductItem",
   props: {
     info: Object
+  },
+  methods: {
+    handleOpen: function() {
+      this.$emit("openModal", this.info.id);
+    }
   }
 };
 </script>
