@@ -90,7 +90,8 @@ export default {
     },
     removeCartItemSub: function(event) {
       console.log(event, "event");
-      this.cartSubscriptions = event;
+      this.cartSubscriptions = event.subs;
+      this.cartProducts = event.prods;
     },
     openCartModal: function() {
       this.cartToggle = true;
