@@ -26,25 +26,18 @@ export default {
       cartSubscriptionsTotal: 0
     };
   },
-  updated() {
-    console.log("i am updating");
-  },
   props: ["cartProducts", "cartSubscriptions"],
   watch: {
     cartProducts: function() {
-      console.log(this.cartProducts, "inside the cart");
       this.cartProductsPrice = [];
       this.cartSubscriptionsPrice = [];
       for (const item of this.cartProducts) {
-        console.log(item.product);
         const keys = Object.keys(item);
         if (keys.includes("subscription")) {
           this.cartSubscriptionsPrice.push(item.subscription.sub);
           this.cartProductsPrice.push(item.subscription.product);
         } else {
-          console.log(item.product);
           this.cartProductsPrice.push(item.product);
-          console.log(this.cartProductsPrice);
         }
       }
     },

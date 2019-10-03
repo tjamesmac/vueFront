@@ -89,7 +89,6 @@ export default {
       this.cartProducts = event;
     },
     removeCartItemSub: function(event) {
-      console.log(event, "event");
       this.cartSubscriptions = event.subs;
       this.cartProducts = event.prods;
     },

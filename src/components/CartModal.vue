@@ -63,16 +63,12 @@ export default {
       this.$emit("closeCartModal");
     },
     removeItemProd: function(index) {
-      console.log(index);
-      console.log(this.cartProducts, "these are my cart products");
       const cartProd = this.cartProducts;
       cartProd.splice(index, 1);
       this.cartProducts = cartProd;
       this.$emit("removeCartItemProd", this.cartProducts);
     },
     removeItemSub: function(index) {
-      console.log(index);
-      console.log(this.cartProducts, "these are my cart products");
       const subProd = this.cartSubscriptions;
       const cartProd = this.cartProducts;
       subProd.splice(index, 1);
@@ -82,27 +78,21 @@ export default {
       this.$emit("removeCartItemSub", { subs:this.cartSubscriptions, prods: this.cartProducts } );
     },
     getKeys: function() {
-      console.log(cartProductKeys);
       const cartProductKeys = Object.keys(this.cartProducts);
-      console.log(cartProductKeys);
       return cartProductKeys;
     }
   },
   watch: {
     cartProducts: function() {
-      console.log(this.cartProducts, "inside the cart");
       this.cartProductsItems = [];
       this.cartSubscriptionsItems = [];
       for (const item of this.cartProducts) {
-        console.log(item.product);
         const keys = Object.keys(item);
         if (keys.includes("subscription")) {
           this.cartSubscriptionsItems.push(item.subscription.sub);
           this.cartProductsItems.push(item.subscription.product);
         } else {
-          console.log(item.product);
           this.cartProductsItems.push(item.product);
-          console.log(this.cartProductsItems);
         }
       }
     }
