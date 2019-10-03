@@ -12,7 +12,18 @@
             <span>X</span>
           </button>
         </div>
-
+        <div v-for="(item, index) in cartProducts" :key="index">
+          {{ item }}
+          <div class="d-flex flex-row align-items-center" v-if="item.type">
+            {{ item.productName }} - {{ item.type }} - £{{ item.product }}
+            <button
+              class="btn btn-primary text-danger ml-4"
+              v-on:click="removeItem(index)"
+            >
+              X
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-backdrop"></div>
@@ -21,7 +32,33 @@
 
 <script>
 export default {
-  name: "CartModal"
+  name: "CartModal",
+  props: ["cartToggle", "cartProducts", "cartSubscriptions"],
+  methods: {
+    handleClose: function() {
+      this.$emit("closeCartModal");
+    },
+    removeItem: function(index) {
+      console.log(index);
+      console.log(this.cartProducts, "these are my cart products");
+      // this.cartProducts.splice(index, 1);
+      const cartProd = this.cartProducts;
+      cartProd.splice(index, 1);
+      this.cartProducts = cartProd;
+      this.$emit("removeCartItem", this.cartProducts);
+    },
+    getKeys: function() {
+      console.log(cartProductKeys);
+      const cartProductKeys = Object.keys(this.cartProducts);
+      console.log(cartProductKeys);
+      return cartProductKeys;
+    }
+  },
+  watch: {
+    cartProducts: function(old, newVal) {
+      console.log("prop changed: ", old, newVal);
+    }
+  }
 };
 </script>
 
