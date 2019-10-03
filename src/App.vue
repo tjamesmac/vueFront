@@ -22,8 +22,12 @@
                 :cartSubscriptionsPrice="cartSubscriptionsPrice"
                 :cartSubTotal="cartSubTotal"
               />
-
-              <button class="btn btn-primary btn-orange">Checkout</button>
+              <button
+                class="btn btn-primary btn-orange"
+                v-on:click="openCartModal"
+              >
+                Checkout
+              </button>
             </div>
           </div>
         </div>
@@ -47,6 +51,11 @@
       @addToCart="addToCart"
     />
     <CartModal
+      :cartSubscriptions="cartSubscriptions"
+      :cartProducts="cartProducts"
+      :cartToggle="cartToggle"
+      @closeCartModal="closeCartModal"
+      @removeCartItem="removeCartItem"
     />
   </div>
 </template>
@@ -66,8 +75,10 @@ export default {
       discountPercent: jsonData.discountPercent,
       modalData: null,
       cartProductsPrice: [],
+      cartProducts: [],
       cartProdTotal: 0,
       cartSubscriptionsPrice: [],
+      cartSubscriptions: [],
       cartSubTotal: 0,
       cartToggle: false
     };
@@ -79,9 +90,24 @@ export default {
     }
   },
   methods: {
+    removeCartItem: function(event) {
+      console.log("hello remove");
+      console.log(this.cartProducts, "here in the app");
+      console.log(event, "here in the app");
+      this.cartProducts = event;
+    },
+    openCartModal: function() {
+      this.cartToggle = true;
+      const body = document.querySelector("body");
+      body.classList.add("modal-open");
+    },
+    closeCartModal: function() {
+      this.cartToggle = false;
+      const body = document.querySelector("body");
+      body.classList.remove("modal-open");
+    },
     openDealModal: function(event) {
       const target = event - 1;
-      console.log(target);
       const targetValue = parseInt(target);
       this.modalData = this.productData[targetValue];
       const body = document.querySelector("body");
@@ -93,17 +119,18 @@ export default {
       body.classList.remove("modal-open");
     },
     addToCart: function($event) {
-      console.log("add to cart");
-      console.log($event);
       const keys = Object.keys($event);
-      console.log(keys);
       if (keys.includes("subscription")) {
         this.cartSubscriptionsPrice.push($event.subscription.sub);
         this.cartProductsPrice.push($event.subscription.product);
-        console.log(this.cartProductsPrice);
+        this.cartProducts.push($event);
+        this.cartSubscriptions.push($event);
+        
+        console.log(this.cartProducts, 'this is my goal');
       } else {
         this.cartProductsPrice.push($event.product);
-        console.log(this.cartProductsPrice);
+        this.cartProducts.push($event);
+        console.log(this.cartProducts, 'this is my goal');
       }
     },
     cartProductCost: function() {
@@ -113,34 +140,30 @@ export default {
         for (const item of cart) {
           parseInt(item) + total;
         }
-        console.log(total, 'this is total');
         return total;
-      } else {
-        console.log("I did not work");
       }
     }
   },
   watch: {
+    cartProducts: function(oldVal, newVal) {
+      console.log(oldVal, "oldVal")
+      console.log(newVal, "new")
+      this.cartProducts = newVal;
+    },
     cartProductsPrice: function() {
-      console.log(this.cartProductsPrice, "this cart prod");
       let total = 0;
       for (const item of this.cartProductsPrice) {
-        console.log(item + total);
         const float = parseFloat(item);
         total += float;
       }
-      console.log(total);
       this.cartProdTotal = total;
     },
     cartSubscriptionsPrice: function() {
-      console.log(this.cartSubscriptionsPrice, "this sub prod");
       let total = 0;
       for (const item of this.cartSubscriptionsPrice) {
-        console.log(item + total);
         const float = parseFloat(item);
         total += float;
       }
-      console.log(total);
       this.cartSubTotal = total;
     }
   },
