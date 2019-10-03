@@ -26,16 +26,10 @@
       <div class="row">
         <div class="col-12">
           <ul class="card-container">
-            <li
-              v-for="(product, index) in products"
-              :key="index"
-              class="card"
-              v-on:click="clicker"
-              v-bind:data-item="index"
-            >
+            <li v-for="(product, index) in products" :key="index" class="card">
               <ProductItem
                 :info="productData[product]"
-                
+                @openModal="openModal"
               />
             </li>
           </ul>
@@ -73,8 +67,9 @@ export default {
     }
   },
   methods: {
-    clicker: function(event) {
-      const target = event.currentTarget.getAttribute("data-item");
+    openModal: function(event) {
+      const target = event - 1;
+      console.log(target);
       const targetValue = parseInt(target);
       this.modalData = this.productData[targetValue];
       const body = document.querySelector("body");
