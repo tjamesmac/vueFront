@@ -17,10 +17,8 @@
             </div>
             <div class="card-section text-md-right align-self-end">
               <Cart
-                :cartProductsPrice="cartProductsPrice"
-                :cartProdTotal="cartProdTotal"
-                :cartSubscriptionsPrice="cartSubscriptionsPrice"
-                :cartSubTotal="cartSubTotal"
+                :cartProducts="cartProducts"
+                :cartSubscriptions="cartSubscriptions"
               />
               <button
                 class="btn btn-primary btn-orange"
@@ -55,7 +53,8 @@
       :cartProducts="cartProducts"
       :cartToggle="cartToggle"
       @closeCartModal="closeCartModal"
-      @removeCartItem="removeCartItem"
+      @removeCartItemProd="removeCartItemProd"
+      @removeCartItemSub="removeCartItemSub"
     />
   </div>
 </template>
@@ -74,12 +73,8 @@ export default {
       productData: jsonData.products,
       discountPercent: jsonData.discountPercent,
       modalData: null,
-      cartProductsPrice: [],
       cartProducts: [],
-      cartProdTotal: 0,
-      cartSubscriptionsPrice: [],
       cartSubscriptions: [],
-      cartSubTotal: 0,
       cartToggle: false
     };
   },
@@ -90,11 +85,12 @@ export default {
     }
   },
   methods: {
-    removeCartItem: function(event) {
-      console.log("hello remove");
-      console.log(this.cartProducts, "here in the app");
-      console.log(event, "here in the app");
+    removeCartItemProd: function(event) {
       this.cartProducts = event;
+    },
+    removeCartItemSub: function(event) {
+      console.log(event, "event");
+      this.cartSubscriptions = event;
     },
     openCartModal: function() {
       this.cartToggle = true;
@@ -121,50 +117,16 @@ export default {
     addToCart: function($event) {
       const keys = Object.keys($event);
       if (keys.includes("subscription")) {
-        this.cartSubscriptionsPrice.push($event.subscription.sub);
-        this.cartProductsPrice.push($event.subscription.product);
         this.cartProducts.push($event);
         this.cartSubscriptions.push($event);
-        
-        console.log(this.cartProducts, 'this is my goal');
       } else {
-        this.cartProductsPrice.push($event.product);
         this.cartProducts.push($event);
-        console.log(this.cartProducts, 'this is my goal');
-      }
-    },
-    cartProductCost: function() {
-      if (this.cartProductsPrice.length) {
-        const cart = this.cartProductsPrice;
-        const total = 0;
-        for (const item of cart) {
-          parseInt(item) + total;
-        }
-        return total;
       }
     }
   },
   watch: {
     cartProducts: function(oldVal, newVal) {
-      console.log(oldVal, "oldVal")
-      console.log(newVal, "new")
       this.cartProducts = newVal;
-    },
-    cartProductsPrice: function() {
-      let total = 0;
-      for (const item of this.cartProductsPrice) {
-        const float = parseFloat(item);
-        total += float;
-      }
-      this.cartProdTotal = total;
-    },
-    cartSubscriptionsPrice: function() {
-      let total = 0;
-      for (const item of this.cartSubscriptionsPrice) {
-        const float = parseFloat(item);
-        total += float;
-      }
-      this.cartSubTotal = total;
     }
   },
   components: {
