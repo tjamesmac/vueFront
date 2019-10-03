@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     handleOpen: function() {
-      this.$emit("openModal", this.info.id);
+      this.$emit("openDealModal", this.info.id);
     }
   }
 };
