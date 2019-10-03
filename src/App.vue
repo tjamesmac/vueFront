@@ -15,7 +15,7 @@
                 % off ***
               </p>
             </div>
-            <div class="card-section text-right">
+            <div class="card-section text-md-right">
               <p>products go here</p>
               <p>subscription goes here</p>
               <button class="btn btn-primary btn-orange">Checkout</button>
@@ -26,7 +26,13 @@
       <div class="row">
         <div class="col-12">
           <ul class="card-container">
-            <li v-for="(product, index) in products" :key="index" class="card">
+            <li
+              v-for="(product, index) in products"
+              :key="index"
+              class="card"
+              v-on:click="clicker"
+              v-bind:data-item="index"
+            >
               <ProductItem
                 msg="Welcome to Your Vue.js App"
                 :info="productData[product]"
@@ -50,13 +56,21 @@ export default {
   data: function() {
     return {
       productData: jsonData.products,
-      discountPercent: jsonData.discountPercent
+      discountPercent: jsonData.discountPercent,
+      modalData: null
     };
   },
   computed: {
     products: function() {
       const keys = Object.keys(this.productData);
       return keys;
+    }
+  },
+  methods: {
+    clicker: function(event) {
+      const target = event.currentTarget.getAttribute("data-item");
+      console.log(target);
+      this.modalData = target + 1;
     }
   },
   components: {
@@ -148,7 +162,7 @@ export default {
   }
   @media (min-width: 768px) {
     .card {
-      flex: 0 0 45%;
+      flex: 0 0 49%;
     }
   }
 }
