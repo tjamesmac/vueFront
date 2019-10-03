@@ -13,7 +13,6 @@
           </button>
         </div>
         <div v-if="cartProducts.length">
-          <h3>Products</h3>
           <div v-for="(item, index) in cartProducts" :key="index">
             <div class="d-flex flex-row align-items-center" v-if="item.type">
               {{ item.productName }} - {{ item.type }} - £{{ item.product }}
@@ -27,10 +26,13 @@
           </div>
         </div>
         <div v-if="cartSubscriptions.length">
-          <h3>Subscriptions</h3>
           <div v-for="(item, index) in cartSubscriptions" :key="item + index">
-            <div class="d-flex flex-row align-items-center" v-if="item.subscription">
-              {{ item.subscription.productName }} - £{{ item.subscription.product }} - £{{ item.subscription.sub }}p/m
+            <div
+              class="d-flex flex-row align-items-center"
+              v-if="item.subscription"
+            >
+              {{ item.subscription.productName }} - £{{ item.subscription.product }}
+                - £{{ item.subscription.sub }}p/m
               <button
                 class="btn btn-primary text-danger ml-4"
                 v-on:click="removeItemSub(index)"
@@ -72,9 +74,12 @@ export default {
       console.log(index);
       console.log(this.cartProducts, "these are my cart products");
       const subProd = this.cartSubscriptions;
+      const cartProd = this.cartProducts;
       subProd.splice(index, 1);
+      cartProd.splice(index, 1);
       this.cartSubscriptions = subProd;
-      this.$emit("removeCartItemSub", this.cartSubscriptions);
+      this.cartProducts = cartProd;
+      this.$emit("removeCartItemSub", { subs:this.cartSubscriptions, prods: this.cartProducts } );
     },
     getKeys: function() {
       console.log(cartProductKeys);
@@ -84,8 +89,22 @@ export default {
     }
   },
   watch: {
-    cartProducts: function(old, newVal) {
-      console.log("prop changed: ", old, newVal);
+    cartProducts: function() {
+      console.log(this.cartProducts, "inside the cart");
+      this.cartProductsItems = [];
+      this.cartSubscriptionsItems = [];
+      for (const item of this.cartProducts) {
+        console.log(item.product);
+        const keys = Object.keys(item);
+        if (keys.includes("subscription")) {
+          this.cartSubscriptionsItems.push(item.subscription.sub);
+          this.cartProductsItems.push(item.subscription.product);
+        } else {
+          console.log(item.product);
+          this.cartProductsItems.push(item.product);
+          console.log(this.cartProductsItems);
+        }
+      }
     }
   }
 };
