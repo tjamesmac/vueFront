@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     handleClose: function() {
-      this.$emit("closeModal");
+      this.$emit("closeDealModal");
     },
     addToCart: function() {
       // this.$emit("addToCart");
@@ -81,9 +81,15 @@ export default {
         const radio = document.querySelector(
           `input[name="${variantName}"]:checked`
         );
+        const radioName = radio.getAttribute("id");
         if (radio) {
           const radioValue = (radio.value / 2).toFixed(2);
-          const productPrice = { product: radioValue };
+          const productPrice = {
+            product: radioValue,
+            type: radioName,
+            productName: this.productInfo.name
+          };
+          alert("Item added to cart");
           this.$emit("addToCart", productPrice);
         } else {
           alert("Please select an option");
@@ -91,14 +97,16 @@ export default {
       } else if (this.productInfo.subscription) {
         const subPrice = this.productInfo.subscription.price / 100;
         const productPrice = this.productInfo.price / 100;
-        if (subPrice &&  productPrice) {
+        if (subPrice && productPrice) {
           const priceObject = {
             subscription: {
               sub: subPrice,
-              price: productPrice
+              product: productPrice,
+              productName: this.productInfo.name
             }
           };
           console.log(priceObject);
+          alert("Item added to cart");
           return this.$emit("addToCart", priceObject);
         } else {
           alert("Please select an option");
@@ -107,15 +115,16 @@ export default {
         console.log(this.productInfo.price / 100);
         const value = this.productInfo.price / 100;
         if (value) {
-          const productPrice = { product: value };
+          const productPrice = {
+            product: value,
+            productName: this.productInfo.name
+          };
+          alert("Item added to cart");
           return this.$emit("addToCart", productPrice);
         } else {
           alert("Please select an option");
         }
       }
-    },
-    getPrice: function() {
-      console.log(this.productInfo.price);
     }
   },
   computed: {
