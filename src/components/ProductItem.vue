@@ -35,9 +35,6 @@ export default {
   name: "ProductItem",
   props: {
     info: Object
-  },
-  mounted() {
-    console.log(this.info);
   }
 };
 </script>
