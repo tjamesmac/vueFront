@@ -66,9 +66,6 @@ export default {
   props: {
     productInfo: Object || null
   },
-  mounted() {
-    console.log(this.productInfo);
-  },
   methods: {
     handleClose: function() {
       this.$emit("closeDealModal");
@@ -76,13 +73,12 @@ export default {
     addToCart: function() {
       // this.$emit("addToCart");
       if (this.productInfo.variants) {
-        console.log("I am here");
         const variantName = "group" + this.productInfo.name;
         const radio = document.querySelector(
           `input[name="${variantName}"]:checked`
         );
-        const radioName = radio.getAttribute("id");
         if (radio) {
+          const radioName = radio.getAttribute("id");
           const radioValue = (radio.value / 2).toFixed(2);
           const productPrice = {
             product: radioValue,
@@ -105,14 +101,12 @@ export default {
               productName: this.productInfo.name
             }
           };
-          console.log(priceObject);
           alert("Item added to cart");
           return this.$emit("addToCart", priceObject);
         } else {
           alert("Please select an option");
         }
       } else {
-        console.log(this.productInfo.price / 100);
         const value = this.productInfo.price / 100;
         if (value) {
           const productPrice = {
@@ -129,7 +123,6 @@ export default {
   },
   computed: {
     propCheck() {
-      console.log(this.productInfo);
       return this.productInfo;
     }
   }
