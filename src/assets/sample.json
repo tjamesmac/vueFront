@@ -1,0 +1,78 @@
+{
+  "discountPercent": 50,
+  "products": [
+    {
+      "id": 1,
+      "allowsDiscount": true,
+      "name": "Custom Templates",
+      "description": "Work in the way you want with personlised templates. You can either take the time to create your own for free or if you're short on time choose an option, send us the details and we'll build them for you.",
+      "variants": [
+        {
+          "id": 1,
+          "name": "1-2",
+          "price": 2999
+        }, {
+          "id": 2,
+          "name": "3-5",
+          "price": 5999
+        }, {
+          "id": 3,
+          "name": "6-9",
+          "price": 7999
+        }, {
+          "id": 4,
+          "name": "10-15",
+          "price": 9999
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "allowsDiscount": true,
+      "name": "Online CPD Webinars",
+      "description": "A monthly 1-2 hour online continuing professional development course focused on the latest research and techniques in the world of sports injuries.",
+      "detail": "\n<p class=\"my-4\">A monthly 1-2 hour online continuing professional development course focused on the latest research and techniques in the world of sports injuries.</p>\n\n<ol>\n<li>The benefit of strength training for runners</li>\n<li>Manual Therapy: The hands on vs hands off debate</li>\n<li>Current concepts in sports taping</li>\n<li>Stretching in sport: An update</li>\n<li>Electrotherapy: Should you still use it?</li>\n<li>Pain Science in the sporting athlete</li>\n</ol>\n\n<p class=\"my-4\">Onwards tailored to member requests.</p>\n",
+      "variants": [
+        {
+          "id": 1,
+          "name": "Single course",
+          "price": 1499
+        }, {
+          "id": 2,
+          "name": "Annual",
+          "price": 9999
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "allowsDiscount": true,
+      "name": "Business Improvement CPD",
+      "description": "\n<p class=\"my-4\">Simple Solutions to achieve what <em>YOU</em> want from <em>YOUR</em> business.</p>\n\n<p class=\"my-4\">1 day dedicated to the key aspects of your business helping you achieve your business goals which may be more money, more time, less worry or all of them.</p>\n\n<p class=\"my-4\">30 min one to one follow up session.</p>\n",
+      "detail": "\n<p class=\"my-4\">Simple Solutions to achieve what <em>YOU</em> want from <em>YOUR</em> business.</p>\n\n<ul>\n<li>Is your business where you want it to be?</li>\n<li>Are you proud of where your business is?</li>\n<li>Do you want to punch above your weight?</li>\n<li>Do you stay awake at night worrying about parts of your business?</li>\n<li>Don't copy someone elses secrets of success. Find out what works for you. </li>\n<li>Take the frustration out of fixing people.</li>\n</ul>\n\n<p class=\"my-4\">1 day dedicated to the key aspects of your business helping you achieve your business goals which may be more money, more time, less worry or all of them.</p>\n\n<p class=\"my-4\">30 min one to one follow up session.</p>\n\n<p class=\"my-4\">Using everything we've learnt from our careers and helping thousands of therapists with Sports Injury Fix to empower you to achieve your goals.</p>\n\n<h4>Presenters:</h4>\n<b>Mike James:</b> 20 years experienced Physio/Sports Therapist/Strength Coach.<br>\n<b>Malcolm Sloan:</b> 17 years experience business and management consultancy.<br>\n<b>James Edgeworth:</b> 12 years experienced web developer and tech genius.<br>\n<b>Tom Marshall:</b> 11 years experience marketing, elite running and GB athlete.<br>\n   ",
+      "price": 14900
+    },
+    {
+      "id": 4,
+      "allowsDiscount": false,
+      "name": "Website",
+      "description": "Secure and effective website designed specifically for therapists. Hosted and managed within the same cloud enterprise infrastructure as Sports Injury Fix on it’s own virtual instance with backups as standard. Comes with a .co.uk domain name, or use your own.\n\nYour website will be optimised for SEO and comes with Google Analytics.",
+      "dealText": "Buy a website and get 6 months free Sports Injury Fix membership.",
+      "price": 49900,
+      "subscription": {
+        "price": 2000,
+        "name": "Hosting and unlimited updates",
+        "rata": "month",
+        "label": "p/m"
+      }
+    },
+    {
+      "id": 5,
+      "allowsDiscount": true,
+      "name": "Supercharge Your Business",
+      "description": "\n<p class=\"my-4\">Acheive what you want from your business.</p>\n\n<p class=\"my-4\">Have the full power and knowledge of Sports Injury Fix dedicated on you and your business.</p>\n\n<p class=\"my-4\">55+ years of business, clinical and tech knowledge to empower you to achieve what you want from your business through 121 personalised sessions with relevant experts.</p>\n\n<p class=\"my-4\">We've seen and experienced what works and doesn't work for thousand of therapists and businesses of different sizes. We want to use this knowledge to help you.</p>\n",
+      "detail": "\n<p class=\"my-4\">Acheive what you want from your business</p>\n\n<p class=\"my-4\">Have the full power and knowledge of Sports Injury Fix dedicated on you and your business.</p>\n\n<p class=\"my-4\">55+ years of business, clinical and tech knowledge to empower you to achieve what you want from your business through 121 personalised sessions with relevant experts.</p>\n\n<p class=\"my-4\">We've seen and experienced what works and doesn't work for thousand of therapists and businesses of different sizes. We want to use this knowledge to help you. </p>\n\n<p class=\"my-4\">\n1 hour scoping call<br>\n1 day dedicated to your business<br>\n1 hour follow up session<br>\n</p>\n\n<h4>Consultants</h4>\n<b>Mike James:</b> 20 years experienced Physio/Sports Therapist/Strength Coach.<br>\n<b>Malcolm Sloan:</b> 17 years experience business and management consultancy.<br>\n<b>James Edgeworth:</b> 12 years experienced web developer and tech genius.<br>\n<b>Tom Marshall:</b> 11 years experience marketing, elite running and GB athlete.<br>\n ",
+      "price": 99900
+    }
+  ]
+}
