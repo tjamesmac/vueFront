@@ -12,16 +12,32 @@
             <span>X</span>
           </button>
         </div>
-        <div v-for="(item, index) in cartProducts" :key="index">
-          {{ item }}
-          <div class="d-flex flex-row align-items-center" v-if="item.type">
-            {{ item.productName }} - {{ item.type }} - £{{ item.product }}
-            <button
-              class="btn btn-primary text-danger ml-4"
-              v-on:click="removeItem(index)"
-            >
-              X
-            </button>
+        <div v-if="cartProducts.length">
+          <h3>Products</h3>
+          <div v-for="(item, index) in cartProducts" :key="index">
+            <div class="d-flex flex-row align-items-center" v-if="item.type">
+              {{ item.productName }} - {{ item.type }} - £{{ item.product }}
+              <button
+                class="btn btn-primary text-danger ml-4"
+                v-on:click="removeItemProd(index)"
+              >
+                X
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-if="cartSubscriptions.length">
+          <h3>Subscriptions</h3>
+          <div v-for="(item, index) in cartSubscriptions" :key="item + index">
+            <div class="d-flex flex-row align-items-center" v-if="item.subscription">
+              {{ item.subscription.productName }} - £{{ item.subscription.product }} - £{{ item.subscription.sub }}p/m
+              <button
+                class="btn btn-primary text-danger ml-4"
+                v-on:click="removeItemSub(index)"
+              >
+                X
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -33,19 +49,32 @@
 <script>
 export default {
   name: "CartModal",
+  data: function() {
+    return {
+      cartProductsItems: [],
+      cartSubscriptionsItems: []
+    };
+  },
   props: ["cartToggle", "cartProducts", "cartSubscriptions"],
   methods: {
     handleClose: function() {
       this.$emit("closeCartModal");
     },
-    removeItem: function(index) {
+    removeItemProd: function(index) {
       console.log(index);
       console.log(this.cartProducts, "these are my cart products");
-      // this.cartProducts.splice(index, 1);
       const cartProd = this.cartProducts;
       cartProd.splice(index, 1);
       this.cartProducts = cartProd;
-      this.$emit("removeCartItem", this.cartProducts);
+      this.$emit("removeCartItemProd", this.cartProducts);
+    },
+    removeItemSub: function(index) {
+      console.log(index);
+      console.log(this.cartProducts, "these are my cart products");
+      const subProd = this.cartSubscriptions;
+      subProd.splice(index, 1);
+      this.cartSubscriptions = subProd;
+      this.$emit("removeCartItemSub", this.cartSubscriptions);
     },
     getKeys: function() {
       console.log(cartProductKeys);
