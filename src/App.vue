@@ -3,7 +3,7 @@
     <main class="container">
       <div class="row">
         <div class="col-12">
-          <div class="card d-flex flex-md-row">
+          <div class="card d-flex flex-md-row align-items-end">
             <div class="card-section">
               <h2>Help boost your business</h2>
               <p>
@@ -15,9 +15,14 @@
                 % off ***
               </p>
             </div>
-            <div class="card-section text-md-right">
-              <p v-if="cartProducts">products go here</p>
-              <p v-if="cartSubscriptions">subscription goes here</p>
+            <div class="card-section text-md-right align-self-end">
+              <Cart
+                :cartProductsPrice="cartProductsPrice"
+                :cartProdTotal="cartProdTotal"
+                :cartSubscriptionsPrice="cartSubscriptionsPrice"
+                :cartSubTotal="cartSubTotal"
+              />
+
               <button class="btn btn-primary btn-orange">Checkout</button>
             </div>
           </div>
@@ -29,7 +34,7 @@
             <li v-for="(product, index) in products" :key="index" class="card">
               <ProductItem
                 :info="productData[product]"
-                @openModal="openModal"
+                @openDealModal="openDealModal"
               />
             </li>
           </ul>
@@ -38,8 +43,10 @@
     </main>
     <DealModal
       :product-info="modalData"
-      @closeModal="closeModal"
+      @closeDealModal="closeDealModal"
       @addToCart="addToCart"
+    />
+    <CartModal
     />
   </div>
 </template>
@@ -47,6 +54,8 @@
 <script>
 import ProductItem from "./components/ProductItem.vue";
 import DealModal from "./components/DealModal.vue";
+import Cart from "./components/Cart.vue";
+import CartModal from "./components/CartModal.vue";
 import jsonData from "./assets/sample.json";
 
 export default {
@@ -56,8 +65,11 @@ export default {
       productData: jsonData.products,
       discountPercent: jsonData.discountPercent,
       modalData: null,
-      cartProducts: [],
-      cartSubscriptions: []
+      cartProductsPrice: [],
+      cartProdTotal: 0,
+      cartSubscriptionsPrice: [],
+      cartSubTotal: 0,
+      cartToggle: false
     };
   },
   computed: {
@@ -67,7 +79,7 @@ export default {
     }
   },
   methods: {
-    openModal: function(event) {
+    openDealModal: function(event) {
       const target = event - 1;
       console.log(target);
       const targetValue = parseInt(target);
@@ -75,7 +87,7 @@ export default {
       const body = document.querySelector("body");
       body.classList.add("modal-open");
     },
-    closeModal: function() {
+    closeDealModal: function() {
       this.modalData = null;
       const body = document.querySelector("body");
       body.classList.remove("modal-open");
@@ -83,13 +95,60 @@ export default {
     addToCart: function($event) {
       console.log("add to cart");
       console.log($event);
-      
-
+      const keys = Object.keys($event);
+      console.log(keys);
+      if (keys.includes("subscription")) {
+        this.cartSubscriptionsPrice.push($event.subscription.sub);
+        this.cartProductsPrice.push($event.subscription.product);
+        console.log(this.cartProductsPrice);
+      } else {
+        this.cartProductsPrice.push($event.product);
+        console.log(this.cartProductsPrice);
+      }
+    },
+    cartProductCost: function() {
+      if (this.cartProductsPrice.length) {
+        const cart = this.cartProductsPrice;
+        const total = 0;
+        for (const item of cart) {
+          parseInt(item) + total;
+        }
+        console.log(total, 'this is total');
+        return total;
+      } else {
+        console.log("I did not work");
+      }
+    }
+  },
+  watch: {
+    cartProductsPrice: function() {
+      console.log(this.cartProductsPrice, "this cart prod");
+      let total = 0;
+      for (const item of this.cartProductsPrice) {
+        console.log(item + total);
+        const float = parseFloat(item);
+        total += float;
+      }
+      console.log(total);
+      this.cartProdTotal = total;
+    },
+    cartSubscriptionsPrice: function() {
+      console.log(this.cartSubscriptionsPrice, "this sub prod");
+      let total = 0;
+      for (const item of this.cartSubscriptionsPrice) {
+        console.log(item + total);
+        const float = parseFloat(item);
+        total += float;
+      }
+      console.log(total);
+      this.cartSubTotal = total;
     }
   },
   components: {
     ProductItem,
-    DealModal
+    DealModal,
+    Cart,
+    CartModal
   }
 };
 </script>
@@ -126,6 +185,8 @@ export default {
   }
   .card-section {
     flex: 0 0 50%;
+    // display: flex;
+    // flex-direction: column;
   }
   .btn-primary {
     vertical-align: top;
