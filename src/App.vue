@@ -16,8 +16,8 @@
               </p>
             </div>
             <div class="card-section text-md-right">
-              <p>products go here</p>
-              <p>subscription goes here</p>
+              <p v-if="cartProducts">products go here</p>
+              <p v-if="cartSubscriptions">subscription goes here</p>
               <button class="btn btn-primary btn-orange">Checkout</button>
             </div>
           </div>
@@ -34,15 +34,19 @@
               v-bind:data-item="index"
             >
               <ProductItem
-                msg="Welcome to Your Vue.js App"
                 :info="productData[product]"
+                
               />
             </li>
           </ul>
         </div>
       </div>
     </main>
-    <DealModal />
+    <DealModal
+      :product-info="modalData"
+      @closeModal="closeModal"
+      @addToCart="addToCart"
+    />
   </div>
 </template>
 
@@ -57,7 +61,9 @@ export default {
     return {
       productData: jsonData.products,
       discountPercent: jsonData.discountPercent,
-      modalData: null
+      modalData: null,
+      cartProducts: [],
+      cartSubscriptions: []
     };
   },
   computed: {
@@ -69,8 +75,21 @@ export default {
   methods: {
     clicker: function(event) {
       const target = event.currentTarget.getAttribute("data-item");
-      console.log(target);
-      this.modalData = target + 1;
+      const targetValue = parseInt(target);
+      this.modalData = this.productData[targetValue];
+      const body = document.querySelector("body");
+      body.classList.add("modal-open");
+    },
+    closeModal: function() {
+      this.modalData = null;
+      const body = document.querySelector("body");
+      body.classList.remove("modal-open");
+    },
+    addToCart: function($event) {
+      console.log("add to cart");
+      console.log($event);
+      
+
     }
   },
   components: {
